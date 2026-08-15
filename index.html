@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="auto">
+<head>
+<link rel="icon" href="data:,">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mahi — Developer & Content Creator</title>
+<meta name="description" content="Mahi — Developer, content creator, and tech enthusiast. Coding, editing, and creating one project at a time.">
+<!-- Open Graph -->
+<meta property="og:title" content="Mahi — Developer & Content Creator">
+<meta property="og:description" content="Developer, content creator, and tech enthusiast building the web one project at a time.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://mahi.infinityfree.me">
+
+<meta property="og:image" content="https://mahi.infinityfree.me/images/DP.png">
+<meta property="og:image:width" content="1256">
+<meta property="og:image:height" content="1256">
+<meta property="og:image:alt" content="Mahi — Developer & Content Creator">
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Mahi — Developer & Content Creator">
+<meta name="twitter:description" content="Developer, content creator, and tech enthusiast. Coding, editing, and creating one project at a time.">
+<!-- Theme color (updated by JS) -->
+<meta name="theme-color" content="#FAFAF8" id="metaThemeColor">
+<!-- Canonical -->
+<link rel="canonical" href="https://mahi.infinityfree.me">
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style1.css">
+<script src="script1.js" defer></script>
+<!-- ======================================================================================
+     INDEX HTML
+     ====================================================================================== -->
+
+</head>
+<body class="is-loading">
+<!-- ============================================================
+     MAHI — 3D VOICE REACTIVE ORBITAL CORE
+     ============================================================ -->
+
+<div id="mahi-orbital-bg" aria-hidden="true">
+
+  <canvas id="mahi-orbital-canvas"></canvas>
+
+  <div class="orbital-haze"></div>
+  <div class="orbital-vignette"></div>
+
+</div>
+
+
+<!-- Voice control -->
+
+<button
+  id="orbitalVoice"
+  class="orbital-voice"
+  type="button"
+  aria-label="Activate voice reactive orbital"
+>
+  <span class="orbital-mic-icon" aria-hidden="true">
+  <svg viewBox="0 0 24 24" fill="none">
+    <rect x="8" y="3" width="8" height="12" rx="4"></rect>
+    <path d="M5 11a7 7 0 0 0 14 0"></path>
+    <path d="M12 18v3"></path>
+    <path d="M8 21h8"></path>
+  </svg>
+</span>
+  <span id="orbitalVoiceText">
+    ACTIVATE VOICE
+  </span>
+</button>
+  <div class="hero-wordmark" aria-hidden="true">MAHI</div>
+  <div class="orbit-field" aria-hidden="true">
+    <div class="orbit-ring orbit-ring--3"></div>
+    <div class="orbit-ring orbit-ring--2"></div>
+    <div class="orbit-ring orbit-spin"><div class="orbit-dot"></div></div>
+    <div class="orbit-ring orbit-spin orbit-spin--rev"><div class="orbit-dot"></div></div>
+  </div>
+<!-- Scroll progress -->
+<div id="scrollProgress" aria-hidden="true"></div>
+
+<!-- Custom cursor -->
+<div id="cursor" aria-hidden="true"></div>
+
+<!-- Ambient system: cursor-reactive glow + drifting starfield -->
+<canvas id="starfield" aria-hidden="true"></canvas>
+<div id="ambientGlow" aria-hidden="true"></div>
+
+<!-- ============================================================
+     LOADING SCREEN
+     ============================================================ -->
+<div id="loadScreen" role="status" aria-label="Loading Mahi's portfolio">
+  <div class="load-wrap">
+    <div class="load-ring" aria-hidden="true">
+      <svg width="64" height="64" viewBox="0 0 64 64">
+        <circle class="track" cx="32" cy="32" r="26"></circle>
+        <circle class="fill" id="loadRingFill" cx="32" cy="32" r="26"></circle>
+      </svg>
+      <span class="load-ring-pct" id="loadRingPct">0%</span>
+    </div>
+    <div class="load-text">
+      <div class="load-boot" id="loadBoot">// INITIALIZING SYSTEM</div>
+      <div class="load-brand"><span class="load-brand-dot">●</span> Mahi.dev</div>
+      <div class="load-line" id="ll0"><span class="load-prompt">$</span><span>Loading creativity....</span></div>
+      <div class="load-line" id="ll1"><span class="load-prompt">$</span><span>Loading imagination....</span></div>
+      <div class="load-line" id="ll2"><span class="load-prompt">$</span><span>Connecting intelligence....</span></div>
+      <div class="load-line" id="ll3"><span class="load-prompt">$</span><span>Building experiences....</span></div>
+      <div class="load-line load-final" id="ll4"><span class="load-prompt">❯</span><span class="load-txt">Welcome, Mahi.</span></div>
+      <div class="load-bar-wrap"><div id="loadBar"></div></div>
+      <button class="load-skip" id="loadSkip" aria-label="Skip loading screen">[ press any key to skip ]</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     COMMAND PALETTE (Cmd/Ctrl+K)
+     ============================================================ -->
+<div id="cmdOverlay" role="dialog" aria-modal="true" aria-label="Command palette">
+  <div id="cmdPalette">
+    <div class="cmd-search-row">
+      <svg class="cmd-search-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input id="cmdInput" placeholder="Jump to section or action..." autocomplete="off" spellcheck="false" aria-label="Search commands">
+      <button class="cmd-esc-btn" id="cmdClose">esc</button>
+    </div>
+    <div id="cmdResults" role="listbox"></div>
+    <div class="cmd-footer">
+      <span><kbd>↑↓</kbd> navigate</span>
+      <span><kbd>↵</kbd> select</span>
+      <span><kbd>esc</kbd> close</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     NAVIGATION
+     ============================================================ -->
+<nav class="tabs-nav" aria-label="Primary navigation">
+  <div class="tabs-inner">
+    <div class="brand"><span class="dot">●</span>Mahi</div>
+    <ul class="tab-list" role="list">
+      <li><a href="#about"    data-section="about">about<span class="tab-ext">.md</span></a></li>
+      <li><a href="#projects" data-section="projects">projects<span class="tab-ext">.json</span></a></li>
+      <li><a href="#blog"     data-section="blog">blog<span class="tab-ext">.log</span></a></li>
+      <li><a href="#contact"  data-section="contact">contact<span class="tab-ext">.sh</span></a></li>
+      <li><a href="#social"   data-section="social">social<span class="tab-ext">.yaml</span></a></li>
+    </ul>
+    <div class="theme-cluster" aria-label="Theme selector">
+      <button class="theme-btn" data-theme-btn="light" aria-label="Light mode" title="Light mode">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+      <button class="theme-btn" data-theme-btn="dark" aria-label="Dark mode" title="Dark mode">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <button class="theme-btn" data-theme-btn="auto" aria-label="System theme" title="System default">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+      </button>
+    </div>
+    <button class="cmd-badge" id="cmdTrigger" aria-label="Open command palette (Ctrl+K)">⌘K</button>
+  </div>
+</nav>
+
+<main>
+
+<!-- ============================================================
+     HERO
+     ============================================================ -->
+<header class="hero wrap">
+  <div class="terminal" role="region" aria-label="Interactive terminal — type help for commands">
+    <span class="hud-corner tl" aria-hidden="true"></span>
+    <span class="hud-corner tr" aria-hidden="true"></span>
+    <span class="hud-corner bl" aria-hidden="true"></span>
+    <span class="hud-corner br" aria-hidden="true"></span>
+    <div class="terminal-bar">
+      <span class="terminal-dot" style="background:#E3958F" aria-hidden="true"></span>
+      <span class="terminal-dot" style="background:#E8C97A" aria-hidden="true"></span>
+      <span class="terminal-dot" style="background:#8FBF9F" aria-hidden="true"></span>
+      <span class="terminal-title">zsh — ~/Mahi</span>
+      <span class="terminal-hint">interactive · type <strong>help</strong></span>
+    </div>
+    <div class="terminal-body" id="termBody">
+      <!-- Original two lines — preserved exactly -->
+      <p class="line"><span class="prompt">$</span>whoami</p>
+      <p class="line out">
+        <span class="typed-name">Mahi</span> · <span class="typed-role">Developer &amp; Content Creator</span>
+      </p>
+      <p class="line"><span class="prompt">$</span>cat tagline.txt</p>
+      <p class="line out" id="typedTagline" aria-live="polite"></p>
+      <!-- Interactive input row -->
+      <div class="term-input-row" id="termInputRow">
+        <span class="prompt">$</span>
+        <input id="termInput" type="text" placeholder="type a command..." autocomplete="off" spellcheck="false" aria-label="Terminal command input">
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-cta">
+    <a class="btn btn-primary" href="#projects"><span class="flag">--</span>view-projects</a>
+    <a class="btn" href="#blog"><span class="flag">--</span>read-blog</a>
+    <a class="btn btn-accent" href="#contact"><span class="flag">--</span>say-hi</a>
+  </div>
+</header>
+
+<!-- ============================================================
+     ABOUT
+     ============================================================ -->
+<section id="about" class="wrap reveal">
+  <div class="section-head">
+    <span class="comment">// about.md</span>
+    <h2 class="section-title">About Me</h2>
+  </div>
+  <div class="about-grid">
+    <span class="avatar-wrap">
+      <img class="avatar" src= "images/DP.png" alt="Photo of Mahi" loading="lazy">
+    </span>
+    <div class="about-body">
+      <p class="about-morph">I <span id="morphWord" class="morph-word">BUILD</span>.</p>
+      <p>Hi, I'm Mahi—a tech enthusiast, creative thinker, and passionate video editor. I love exploring AI, learning new things, and turning ideas into reality through technology. I also create and edit videos for YouTube, where I enjoy bringing creativity to life through cinematic edits and visual content. This blog is my space to share my experiences, projects, thoughts, and the lessons I pick up along the way. Thanks for stopping by and being part of my journey.</p>
+      <p>FOREVER A MAN WITH A LOT OF INTERESTS.</p>
+      <ul class="tag-list" role="list">
+        <li>CODING</li><li>WEB DEVELOPMENT</li><li>EDITING</li><li>SQL</li><li>VISION</li>
+      </ul>
+      <div class="resume-actions">
+  <a href="images/documents/resume.pdf" target="_blank" rel="noopener" class="resume-btn">
+    VIEW RESUME
+  </a>
+
+  <a href="images/documents/resume.pdf" download="Mahi-Resume.pdf" class="resume-btn resume-btn-outline">
+    DOWNLOAD RESUME
+  </a>
+</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     TIMELINE (new)
+     ============================================================ -->
+<section id="timeline" class= "wrap reveal reveal-about">
+  
+  <div class="section-head">
+    <span class="comment">// journey.log</span>
+    <h2 class="section-title">Journey</h2>
+  </div>
+  <div class="timeline-track" id="timelineTrack">
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-year">2022-2023</div>
+      <p class="tl-label">The Beginning.</p>
+      <p class="tl-desc">Karnataka Sangha HR Secondary School • Kodambakkam</p>
+      <p class="tl-desc">The curiosity to build and create began here.</p>
+      <p class="tl-desc">Chose the Computer Science stream.</p>
+      <p class="tl-desc">Learned the fundamentals of C++ and Python.</p>
+      <p class="tl-desc">Explored photography, video editing, and Content creation.</p>
+      <p class="tl-desc">Launched my very first YouTube channel, turning creativity into consistency.</p>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-year">2023</div>
+      <p class="tl-label">A New Chapter.</p>
+      <p class="tl-desc">Bachelor of Computer Applications Vels University • Pallavaram.</p>
+      <p class="tl-desc">A year dedicated to mastering both technology and creativity.</p>
+      <p class="tl-desc">Developed strong programming logic and software fundamentals.</p>
+      <p class="tl-desc">Expanded my skills in advanced video editing, motion graphics, keyframing, and cinematic transitions.</p>
+      <p class="tl-desc">Grew my YouTube community to 7,000+ subscribers, proving consistency creates opportunities.</p>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-year">2024</div>
+      <p class="tl-label">Lessons Beyond Success</p>
+      <p class="tl-desc">Growth isn't always measured by achievements.</p>
+      <p class="tl-desc">Started building beginner-friendly coding projects and practical applications.</p>
+      <p class="tl-desc">Faced my biggest setback when my first YouTube channel was permanently banned.</p>
+      <p class="tl-desc">Joined HERON TECHNICAL SOLUTION LLP as an Operator, balancing professional work with continuous learning.</p>
+      <p class="tl-desc">Learned that resilience is more valuable than success itself.</p>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-year">2025</div>
+      <p class="tl-label">Turning Skills into Value</p>
+      <p class="tl-desc">Knowledge became experience.</p>
+      <p class="tl-desc">Designed and developed responsive websites and web applications.</p>
+      <p class="tl-desc">Started a new YouTube channel with a stronger vision.</p>
+      <p class="tl-desc">Learned 3D animation, VFX, SFX, and cinematic colour grading.</p>
+      <p class="tl-desc">Began earning through professional editing projects.</p>
+      <p class="tl-desc">Joined Licious as a Logistics Crew while continuing to sharpen my technical and creative skills.</p>
+    </div>
+    <div class="tl-item current">
+      <div class="tl-dot"></div>
+      <div class="tl-year">NOW</div>
+      <p class="tl-label">Ready for the Next Mission</p>
+      <p class="tl-desc">A milestone, not the destination.</p>
+      <p class="tl-desc">Graduated with a Bachelor of Computer Applications with no arrears.</p>
+      <p class="tl-desc">Built practical experience across software development, web technologies, databases, and digital media.</p>
+      <p class="tl-desc">Looking for opportunities where I can contribute, solve real-world problems, and grow alongside talented teams.</p>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-year">2027+</div>
+      <p class="tl-label">Future</p>
+      <p class="tl-desc">The best chapters haven't been written yet.</p>
+      <p class="tl-label">"Every challenge became a lesson. Every lesson became a skill. Every skill became a step toward the person I'm still becoming." ✨</p>
+    </div>
+  </div>
+</section>
+<!-- ============================================================
+     ACHIEVEMENTS (new)
+     ============================================================ -->
+<section id="achievements">
+  <div class="wrap reveal reveal-about">
+    <div class="section-head">
+    <span class="comment">// stats.json</span>
+   <h2 class="section-title">By the Numbers</h2>
+    </div>
+    <div class="stats-grid reveal-stagger">
+      <div class="stat-card">
+        <div class="stat-num" data-count="3" data-suf="+">0<span class="stat-suf">+</span></div>
+        <div class="stat-label">Projects Completed</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" data-count="5" data-suf="y">0<span class="stat-suf">y</span></div>
+        <div class="stat-label">Years Learning</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" data-count="10" data-suf="+">0<span class="stat-suf">+</span></div>
+        <div class="stat-label">Social Platforms</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" data-count="inf" data-suf="">∞<span class="stat-suf"></span></div>
+        <div class="stat-label">Coffee Consumed</div>
+      </div>
+    </div>
+    <div class="gh-panel" id="ghPanel">
+      <div class="gh-panel-head">
+        <span class="gh-dot" id="ghDot"></span>
+        <span id="ghStatusText">Live from GitHub · @itzmahi123</span>
+      </div>
+      <div class="gh-body" id="ghBody">
+        <div class="gh-cell"><b id="ghFollowers">—</b><span>Followers</span></div>
+        <div class="gh-cell"><b id="ghRepos">—</b><span>Repos</span></div>
+        <div class="gh-cell"><b id="ghStars">—</b><span>Stars</span></div>
+        <div class="gh-cell"><b id="ghFollowing">—</b><span>Following</span></div>
+      </div>
+      <div class="gh-repos" id="ghRepoList"></div>
+    </div>
+
+    <div class="gh-panel" id="ytPanel">
+    <div class="gh-panel-head">
+      <span class="gh-dot" id="ytDot"></span>
+      <span id="ytStatusText">Live from YouTube</span>
+    </div>
+    <div class="gh-body" id="ytBody">
+      <div class="gh-cell"><b id="ytSubscribers">—</b><span>Subscribers</span></div>
+      <div class="gh-cell"><b id="ytVideos">—</b><span>Videos</span></div>
+      <div class="gh-cell"><b id="ytViews">—</b><span>Views</span></div>
+      <div class="gh-cell"><b id="ytSince">—</b><span>Since</span></div>
+    </div>
+    <div class="gh-videos" id="ytVideoList">
+      <div class="gh-empty">Loading recent uploads…</div>
+    </div>
+    </div>
+</section>
+
+<!-- ============================================================
+     PROJECTS (original — fully preserved)
+     ============================================================ -->
+<section id="projects" class="wrap reveal">
+  <div class="section-head">
+    <span class="comment">// projects.json</span>
+    <h2 class="section-title">Projects</h2>
+  </div>
+  <div class="projects-carousel">
+
+    <button class="carousel-btn carousel-prev" type="button">‹</button>
+
+    <div class="projects-viewport">
+        <div class="projects-track">
+   <a class="card" href="https://local-marketplace.freehosting.dev" target="_blank" rel="noopener noreferrer">
+
+<div class="card-media">
+    <div class="slider">
+        <img src="images/Webapplication/l1.png" class="slide active" alt="">
+        <img src="images/Webapplication/l2.png" class="slide" alt="">
+        <img src="images/Webapplication/l3.png" class="slide" alt="">
+        <img src="images/Webapplication/l4.png" class="slide" alt="">
+        <img src="images/Webapplication/l5.png" class="slide" alt="">
+        <img src="images/Webapplication/l6.png" class="slide" alt="">
+    </div>
+    <span class="card-status">Online</span>
+</div>
+  <div class="card-top">
+    <h3>Local Marketplace Web Application</h3>
+    <span class="hash">a3f9c2</span>
+  </div>
+  <p>Technologies: PHP, MySQL, HTML, CSS. Developed a web platform connecting local buyers and sellers. Implemented product listing and user management features. Designed and managed database operations using MySQL.</p>
+  <div class="card-arch">
+    <span>Browser</span><span class="arch-sep">→</span><span>PHP</span><span class="arch-sep">→</span><span>MySQL</span>
+  </div>
+  <div class="card-tags">
+    <span>Shopping</span><span>Cart</span><span>Selling &amp; Buying</span>
+  </div>
+  <span class="card-link">view web application →</span>
+  </a>
+
+  <a class="card" href="https://digital-health.freehosting.dev" target="_blank" rel="noopener noreferrer">
+    <div class="card-media">
+    <div class="slider">
+        <img src="images/Webapplication/p1.png" class="slide active" alt="">
+        <img src="images/Webapplication/p2.png" class="slide" alt="">
+        <img src="images/Webapplication/p3.png" class="slide" alt="">
+        <img src="images/Webapplication/p4.png" class="slide" alt="">
+        <img src="images/Webapplication/p5.png" class="slide" alt="">
+        <img src="images/Webapplication/p6.png" class="slide" alt="">
+    </div>
+    <span class="card-status">Online</span>
+      </div>
+      <div class="card-top">
+        <h3>Digital Patient Record System</h3>
+        <span class="hash">f019ad</span></div>
+      <p>Technologies: PHP, MySQL, HTML, CSS. Created a system for storing and managing patient information digitally. Implemented data entry and retrieval functionalities. Improved record organization and accessibility.</p>
+      <div class="card-arch">
+        <span>Browser</span><span class="arch-sep">→</span><span>PHP</span><span class="arch-sep">→</span><span>MySQL</span>
+      </div>
+      <div class="card-tags">
+        <span>Records</span><span>Patient list</span><span>Doctors</span>
+      </div>
+      <span class="card-link">view web application →</span>
+  </a>
+
+  <a class="card" href="https://vehicle-service.freehosting.dev" target="_blank" rel="noopener noreferrer">
+    <div class="card-media">
+    <div class="slider">
+        <img src="images/Webapplication/v1.png" class="slide active" alt="">
+        <img src="images/Webapplication/v2.png" class="slide" alt="">
+        <img src="images/Webapplication/v3.png" class="slide" alt="">
+        <img src="images/Webapplication/v4.png" class="slide" alt="">
+    </div>
+    <span class="card-status">Online</span>
+    </div>
+      <div class="card-top">
+        <h3>Vehicle Service Record System</h3><span class="hash">7b21e0</span>
+      </div>
+      <p>Technologies: PHP, MySQL, HTML, CSS. Built a web application for tracking vehicle maintenance history. Managed service records through a structured database system. Developed user-friendly interfaces for record management.</p>
+      <div class="card-arch">
+        <span>Browser</span><span class="arch-sep">→</span><span>PHP</span><span class="arch-sep">→</span><span>MySQL</span>
+      </div>
+      <div class="card-tags">
+        <span>Service</span><span>Record</span><span>SQL</span>
+      </div>
+      <span class="card-link">view web application →</span>
+  </a>
+      </div>
+    </div>
+
+    <button class="carousel-btn carousel-next" type="button">›</button>
+
+</div>
+
+<div class="carousel-dots" id="projectDots"></div>
+</section>
+
+<!-- ============================================================
+     WEBSITES
+     ============================================================ -->
+<section id="websites" class="wrap reveal">
+  <div class="section-head">
+    <span class="comment">// websites.json</span>
+    <h2 class="section-title">Websites</h2>
+  </div>
+
+  <div class="content-carousel" data-carousel="websites">
+    <button class="content-carousel-btn content-carousel-prev" type="button" aria-label="Previous website">‹</button>
+    <div class="content-carousel-viewport">
+      <div class="content-carousel-track website-track">
+        <article class="website-card">
+          <div class="website-media"><img src="images/Website/soon.png" alt="Website project preview" loading="lazy"><span class="card-status">Coming Soon</span></div>
+          <div class="card-top"><h3>Website Project One</h3><span class="hash">w01a9c</span></div>
+          <p>A modern responsive website designed with HTML, CSS and JavaScript. Focused on clean UI, responsive layouts and smooth interactions.</p>
+          <div class="card-arch"><span>Browser</span><span class="arch-sep">→</span><span>HTML</span><span class="arch-sep">→</span><span>CSS</span><span class="arch-sep">→</span><span>JS</span></div>
+          <div class="card-tags"><span>Responsive</span><span>UI</span><span>JavaScript</span></div>
+          <span class="card-link">visit website →</span>
+        </article>
+
+        <article class="website-card">
+          <div class="website-media"><img src="images/Website/soon1.avif" alt="Website project preview" loading="lazy"><span class="card-status">Coming Soon</span></div>
+          <div class="card-top"><h3>Website Project Two</h3><span class="hash">w72bc4</span></div>
+          <p>A visually focused website created with responsive design principles and a strong emphasis on presentation and usability.</p>
+          <div class="card-arch"><span>Browser</span><span class="arch-sep">→</span><span>HTML</span><span class="arch-sep">→</span><span>CSS</span><span class="arch-sep">→</span><span>JS</span></div>
+          <div class="card-tags"><span>Design</span><span>Responsive</span><span>Frontend</span></div>
+          <span class="card-link">visit website →</span>
+        </article>
+
+        <article class="website-card">
+          <div class="website-media"><img src="images/Website/soon2.jpg" alt="Website project preview" loading="lazy"><span class="card-status">Coming Soon</span></div>
+          <div class="card-top"><h3>Website Project Three</h3><span class="hash">w91fd2</span></div>
+          <p>A responsive website project exploring modern layouts, typography, animation and interactive frontend elements.</p>
+          <div class="card-arch"><span>Browser</span><span class="arch-sep">→</span><span>HTML</span><span class="arch-sep">→</span><span>CSS</span><span class="arch-sep">→</span><span>JS</span></div>
+          <div class="card-tags"><span>Frontend</span><span>Animation</span><span>UI</span></div>
+          <span class="card-link">visit website →</span>
+        </article>
+      </div>
+    </div>
+    <button class="content-carousel-btn content-carousel-next" type="button" aria-label="Next website">›</button>
+  </div>
+  <div class="content-carousel-dots" data-carousel-dots="websites" aria-label="Website slides"></div>
+</section>
+
+<!-- ============================================================
+     CERTIFICATES
+     ============================================================ -->
+<section id="certificates" class="wrap reveal">
+  <div class="section-head">
+    <span class="comment">// certificates.log</span>
+    <h2 class="section-title">Certifications &amp; Credentials</h2>
+  </div>
+
+  <div class="content-carousel" data-carousel="certificates">
+    <button class="content-carousel-btn content-carousel-prev" type="button" aria-label="Previous certificate">‹</button>
+    <div class="content-carousel-viewport">
+      <div class="content-carousel-track certificate-track">
+        <article class="certificate-card">
+          <div class="certificate-preview"><img src="images/Certificate/c1.jpeg" alt="Certificate 01" loading="lazy"></div>
+          <div class="certificate-content">
+            <div class="certificate-top"><span class="certificate-index">CERT_001</span><span class="certificate-date">2026</span></div>
+            <h3>Certificate Name</h3><p class="certificate-issuer">Issued by <strong>Organization Name</strong></p>
+            <div class="certificate-id">ID: YOUR-CREDENTIAL-ID</div>
+            <div class="certificate-actions"><button class="certificate-btn" type="button" onclick="openCertificate('images/Certificate/c1.jpeg','images/c1.pdf')">↗ View Certificate</button></div>
+          </div>
+        </article>
+
+        <article class="certificate-card">
+          <div class="certificate-preview"><img src="images/Certificate/c2.png" alt="Certificate 02" loading="lazy"></div>
+          <div class="certificate-content">
+            <div class="certificate-top"><span class="certificate-index">CERT_002</span><span class="certificate-date">2026</span></div>
+            <h3>Certificate Name</h3><p class="certificate-issuer">Issued by <strong>Organization Name</strong></p>
+            <div class="certificate-id">ID: YOUR-CREDENTIAL-ID</div>
+            <div class="certificate-actions"><button class="certificate-btn" type="button" onclick="openCertificate('images/Certificate/c2.png','Certificate Name')">↗ View Certificate</button></div>
+          </div>
+        </article>
+
+        <article class="certificate-card">
+          <div class="certificate-preview"><img src="images/Certificate/c3.jpeg" alt="Certificate 03" loading="lazy"></div>
+          <div class="certificate-content">
+            <div class="certificate-top"><span class="certificate-index">CERT_003</span><span class="certificate-date">2026</span></div>
+            <h3>Certificate Name</h3><p class="certificate-issuer">Issued by <strong>Organization Name</strong></p>
+            <div class="certificate-id">ID: YOUR-CREDENTIAL-ID</div>
+            <div class="certificate-actions"><button class="certificate-btn" type="button" onclick="openCertificate('images/Certificate/c3.jpeg','Certificate Name')">↗ View Certificate</button></div>
+          </div>
+        </article>
+      </div>
+    </div>
+    <button class="content-carousel-btn content-carousel-next" type="button" aria-label="Next certificate">›</button>
+  </div>
+  <div class="content-carousel-dots" data-carousel-dots="certificates" aria-label="Certificate slides"></div>
+</section>
+
+<!-- ============================================================
+     CERTIFICATE VIEWER
+     ============================================================ -->
+
+<div
+  id="certificateModal"
+  class="certificate-modal"
+  role="dialog"
+  aria-modal="true"
+  aria-hidden="true"
+>
+
+  <div class="certificate-modal-box">
+
+    <div class="certificate-modal-header">
+
+      <span
+        id="certificateModalTitle"
+        class="certificate-modal-title"
+      >
+        certificate.preview
+      </span>
+
+      <button
+        type="button"
+        class="certificate-modal-close"
+        onclick="closeCertificate()"
+        aria-label="Close certificate"
+      >
+        ×
+      </button>
+
+    </div>
+
+    <div class="certificate-modal-body">
+
+      <img
+        id="certificateModalImage"
+        src="images/c3.jpeg"
+        alt="Certificate preview"
+      >
+
+    </div>
+
+  </div>
+
+</div>
+<!-- ============================================================
+     BLOG (original — fully preserved)
+     ============================================================ -->
+<section id="blog" class="wrap reveal">
+  <div class="section-head">
+    <span class="comment">// blog.log</span>
+    <h2 class="section-title">Writing</h2>
+  </div>
+  <div class="log reveal-stagger">
+      <article class="log-entry">
+      <span class="log-date">2026-08-06</span>
+      <div>
+        <h3><a href="#">What comes next?</a></h3>
+        <p>More learning. More building. More challenges. The destination isn't the goal—the journey of becoming better is.</p>
+      </div>
+    </article>
+    <article class="log-entry">
+      <span class="log-date">2026-06-12</span>
+      <div>
+        <h3><a href="#">Why do I learn different kinds of things instead of focusing on just one?</a></h3>
+        <p>Because I believe in this philosophy: <strong>“Jack of all trades master of none, though oftentimes better than master of one.”</strong>
+            Learning different skills helps me adapt, solve problems from multiple perspectives, connect ideas creatively, and grow into a more versatile person.
+            While I may not master everything, my broad knowledge allows me to learn faster and handle diverse challenges with confidence. 🌱</p>
+      </div>
+    </article>
+    <article class="log-entry">
+      <span class="log-date">2026-05-03</span>
+      <div>
+        <h3><a href="#">Why do I build instead of just consume?</a></h3>
+        <p>Because creating something teaches me more than simply using it. Every project is an opportunity to learn, improve, and leave a mark.</p>
+      </div>
+    </article>
+    <article class="log-entry">
+      <span class="log-date">2026-03-21</span>
+      <div>
+        <h3><a href="#">What motivates me?</a></h3>
+        <p>Curiosity. I don't chase perfection—I chase understanding. Every new skill is another tool I can use to create something meaningful.</p>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ============================================================
+     CONTACT (original — fully preserved)
+     ============================================================ -->
+<section id="contact" class="wrap reveal">
+  <div class="section-head">
+    <span class="comment">// contact.sh</span>
+    <h2 class="section-title">Get in touch</h2>
+  </div>
+
+  <div class="contact-grid">
+
+    <div class="contact-intro">
+      <span class="comment" style="margin-bottom:0;"># takes about a day to reply</span>
+      <p>
+        Open to freelance projects, full-time roles, or just talking through a
+        tricky bug. Fill in the form, or email me directly.
+      </p>
+
+      <p>
+        <a href="mailto:itzmahibro@gmail.com">itzmahibro@gmail.com</a>
+      </p>
+    </div>
+
+    <form id="contactForm"
+          action="https://api.web3forms.com/submit"
+          method="POST">
+
+      <!-- Web3Forms Access Key -->
+      <input
+        type="hidden"
+        name="access_key"
+        value="3040ae92-fa21-43bf-8762-847c965aeae4">
+
+      <!-- Optional -->
+      <input
+        type="hidden"
+        name="subject"
+        value="New Portfolio Contact Message">
+
+      <div class="field">
+        <label for="name">Name</label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          placeholder="Your name"
+          autocomplete="name"
+          required>
+      </div>
+
+      <div class="field">
+        <label for="email">Email</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          placeholder="your@email.com"
+          autocomplete="email"
+          required>
+      </div>
+
+      <div class="field">
+        <label for="message">Message</label>
+        <textarea
+          id="message"
+          name="message"
+          rows="6"
+          placeholder="Write your message..."
+          autocomplete="off"
+          required></textarea>
+      </div>
+
+      <button type="submit" class="btn btn-primary">
+        <span class="flag">$</span> ./send
+      </button>
+
+      <span class="send-status" id="sendStatus">
+        Message queued — thanks!
+      </span>
+
+    </form>
+
+  </div>
+</section>
+
+<!-- ============================================================
+     SOCIAL (original — 100% preserved)
+     ============================================================ -->
+<section id="social">
+  <div class="social-bg" aria-hidden="true">
+    <canvas id="socialCanvas"></canvas>
+    <div class="bg-orb bg-orb-1"></div>
+    <div class="bg-orb bg-orb-2"></div>
+    <div class="bg-orb bg-orb-3"></div>
+    <div class="social-mesh"></div>
+  </div>
+
+  <div class="social-head">
+    <span class="comment">// social.yaml</span>
+    <h2 class="section-title">Find me elsewhere</h2>
+    <p class="social-subhead">10 platforms — click any row to visit</p>
+  </div>
+
+  <div class="social-columns" id="socialColumns">
+
+    <!-- LEFT: Personal & Creative -->
+    <div class="social-col-left">
+      <div class="social-col-label">── personal &amp; creative ──</div>
+
+      <a class="social-row" href="https://www.facebook.com/share/18CJp4EXvy/" target="_blank" rel="noopener noreferrer">
+        <span class="social-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M14 9h2.5V6H14c-2 0-3.5 1.6-3.5 3.6V11H8v3h2.5v6h3v-6H16l.5-3h-3V9.6c0-.4.2-.6.5-.6z"/></svg></span>
+        <span class="social-text"><span class="social-name">Mahi</span><span class="social-meta">Facebook</span></span>
+        <span class="social-arrow" aria-hidden="true">→</span>
+      </a>
+
+      <a class="social-row" href="https://www.instagram.com/itzmahi.in?utm_source=qr&igsh=MXNvbzI0YWlrZ3Q4OA%3D%3D" target="_blank" rel="noopener noreferrer">
+        <span class="social-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1"/></svg></span>
+        <span class="social-text"><span class="social-name">itzmahi.in</span><span class="social-meta">Instagram · personal</span></span>
+        <span class="social-arrow" aria-hidden="true">→</span>
+      </a>
+
+      <a class="social-row" href="https://www.instagram.com/animix.2d?utm_source=qr&igsh=MWIzaDhkdDMybGo2OA%3D%3D" target="_blank" rel="noopener noreferrer">
+        <span class="social-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1"/></svg></span>
+        <span class="social-text"><span class="social-name">animix.2d</span><span class="social-meta">Instagram · editing</span></span>
+        <span class="social-arrow" aria-hidden="true">→</span>
+      </a>
+
+      <a class="social-row" href="https://youtube.com/@animix.2d?si=tYbWKA0LwymamuKe" target="_blank" rel="noopener noreferrer">
+        <span class="social-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M8.5 8l7 4-7 4V8z"/></svg></span>
+        <span class="social-text"><span class="social-name">animix.2d</span><span class="social-meta">YouTube</span></span>
+        <span class="social-arrow" aria-hidden="true">→</span>
+      </a>
+
+      <a class="social-row" href="https://wa.me/qr/7MLOAQELCAR6C1" target="_blank" rel="noopener noreferrer">
+        <span class="social-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M12 2C6.5 2 2 6.5 2 12c0 1.8.5 3.4 1.3 4.9L2 22l5.3-1.3c1.4.8 3 1.2 4.7 1.2 5.5 0 10-4.5 10-10S17.5 2 12 2zm0 18.2c-1.5 0-3-.4-4.2-1.2l-.3-.2-3.1.8.8-3-.2-.3A8.2 8.2 0 0 1 3.8 12c0-4.5 3.7-8.2 8.2-8.2s8.2 3.7 8.2 8.2-3.7 8.2-8.2 8.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.2-.7.8-.8 1-.1.2-.3.2-.6.1-.2-.1-1-.4-1.9-1.2-.7-.6-1.2-1.4-1.3-1.6-.1-.2 0-.4.1-.5l.4-.4c.1-.1.2-.3.2-.4.1-.2 0-.3 0-.4-.1-.1-.6-1.4-.8-1.9-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 1.9s.8 2.2.9 2.4c.1.2 1.6 2.4 3.9 3.4.5.2 1 .4 1.3.5.5.2 1 .1 1.4.1.4-.1 1.3-.5 1.5-1 .2-.5.2-.9.1-1z"/></svg></span>
+        <span class="social-text"><span class="social-name">Mahi</span><span class="social-meta">WhatsApp</span></span>
+        <span class="social-arrow" aria-hidden="true">→</span>
+      </a>
+
+      <a class="social-row" href="https://t.me/itzmahi_in" target="_blank" rel="noopener noreferrer">
+        <span class="social-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M21.9 4.3 18.6 20c-.2.9-.8 1.1-1.6.7l-4.3-3.2-2.1 2c-.2.2-.4.4-.8.4l.3-4.2 7.7-7c.3-.3-.1-.4-.5-.2L7 13.4l-4.1-1.3c-.9-.3-.9-.9.2-1.3l16-6.2c.7-.3 1.4.2 1.1 1.7z"/></svg></span>
+        <span class="social-text"><span class="social-name">itzmahi_in</span><span class="social-meta">Telegram · personal</span></span>
+        <span class="social-arrow" aria-hidden="true">→</span>
+      </a>
+    </div>
+
+    <!-- RIGHT: Dev & Professional -->
+    <div class="social-col-right">
+      <div class="social-col-label">── dev &amp; professional ──</div>
+
+      <a class="social-row" href="https://github.com/itzmahi123" target="_blank" rel="noopener noreferrer">
+        <span class="social-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M12 2C6.5 2 2 6.6 2 12.2c0 4.5 2.9 8.3 6.8 9.6.5.1.7-.2.7-.5v-1.9c-2.8.6-3.4-1.3-3.4-1.3-.4-1.1-1-1.4-1-1.4-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.5 2.3 1.1 2.9.8.1-.7.4-1.1.6-1.3-2.2-.3-4.6-1.1-4.6-4.9 0-1.1.4-2 1-2.6-.1-.3-.4-1.3.1-2.6 0 0 .8-.3 2.7 1a9.2 9.2 0 0 1 4.9 0c1.9-1.3 2.7-1 2.7-1 .5 1.3.2 2.3.1 2.6.6.6 1 1.5 1 2.6 0 3.8-2.4 4.6-4.6 4.9.4.3.7.9.7 1.9v2.8c0 .3.2.6.7.5 3.9-1.3 6.8-5.1 6.8-9.6C22 6.6 17.5 2 12 2z"/></svg></span>
+        <span class="social-text"><span class="social-name">itzmahi123</span><span class="social-meta">GitHub</span></span>
+        <span class="social-arrow" aria-hidden="true">→</span>
+      </a>
+
+      <a class="social-row" href="https://linkedin.com/in/itzmahi123" target="_blank" rel="noopener noreferrer">
+        <span class="social-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M6.9 8.4H3.6V20h3.3V8.4zM5.3 3.7a1.9 1.9 0 1 0 0 3.8 1.9 1.9 0 0 0 0-3.8zM20.4 20h-3.3v-5.9c0-1.4 0-3.2-2-3.2s-2.3 1.6-2.3 3.1V20H9.5V8.4h3.2v1.6h.1c.4-.8 1.6-1.7 3.2-1.7 3.5 0 4.1 2.3 4.1 5.2V20z"/></svg></span>
+        <span class="social-text"><span class="social-name">itzmahi123</span><span class="social-meta">LinkedIn</span></span>
+        <span class="social-arrow" aria-hidden="true">→</span>
+      </a>
+
+      <a class="social-row" href="https://leetcode.com/u/itzmahi123" target="_blank" rel="noopener noreferrer">
+        <span class="social-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M13.5 2.5 7 9l3.5 3.5L7 16l6.5 6.5 1.4-1.4-5.1-5.1 3.5-3.5L9.8 9l5.1-5.1z"/></svg></span>
+        <span class="social-text"><span class="social-name">itzmahi123</span><span class="social-meta">LeetCode</span></span>
+        <span class="social-arrow" aria-hidden="true">→</span>
+      </a>
+
+      <a class="social-row" href="https://t.me/Animix2d" target="_blank" rel="noopener noreferrer">
+        <span class="social-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M21.9 4.3 18.6 20c-.2.9-.8 1.1-1.6.7l-4.3-3.2-2.1 2c-.2.2-.4.4-.8.4l.3-4.2 7.7-7c.3-.3-.1-.4-.5-.2L7 13.4l-4.1-1.3c-.9-.3-.9-.9.2-1.3l16-6.2c.7-.3 1.4.2 1.1 1.7z"/></svg></span>
+        <span class="social-text"><span class="social-name">Animix2d</span><span class="social-meta">Telegram · editing</span></span>
+        <span class="social-arrow" aria-hidden="true">→</span>
+      </a>
+    </div>
+
+  </div>
+</section>
+
+</main>
+
+<footer class="wrap">
+  <div class="footer-row">
+    <span>© 2026 Mahi · Built with passion</span>
+    <span>
+      <a href="https://github.com/itzmahi123" target="_blank" rel="noopener noreferrer">github</a> · 
+      <a href="https://linkedin.com/in/itzmahi123" target="_blank" rel="noopener noreferrer">linkedin</a> · 
+      <a href="mailto:itzmahibro@gmail.com">email</a>
+    </span>
+  </div>
+</footer>
+
+<!-- ============================================================
+     M.A.H.I. ASSISTANT — scripted guide (see JS comment for why
+     this isn't a live model call)
+     ============================================================ -->
+<button id="assistantLauncher" aria-label="Open M.A.H.I. assistant" aria-haspopup="dialog">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/><circle cx="12" cy="12" r="4.2"/></svg>
+</button>
+
+<div id="assistantPanel" role="dialog" aria-modal="false" aria-label="M.A.H.I. assistant">
+  <div class="mahi-head">
+    <span class="mahi-avatar" aria-hidden="true"></span>
+    <div class="mahi-head-text">
+      <strong>M.A.H.I.</strong>
+      <span>Mahi's guide · scripted, not a live model</span>
+    </div>
+    <button class="mahi-close" id="mahiClose" aria-label="Close assistant">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+  <div class="mahi-msgs" id="mahiMsgs" aria-live="polite"></div>
+  <div class="mahi-chips" id="mahiChips">
+    <button class="mahi-chip" data-q="Tell me about Mahi">Tell me about Mahi</button>
+    <button class="mahi-chip" data-q="Show his projects">Show his projects</button>
+    <button class="mahi-chip" data-q="What tech does he use?">What tech does he use?</button>
+    <button class="mahi-chip" data-q="Download his resume">Download resume</button>
+    <button class="mahi-chip" data-q="How do I contact him?">Contact him</button>
+  </div>
+  <form class="mahi-input-row" id="mahiForm">
+    <input id="mahiInput" type="text" placeholder="Ask about Mahi..." autocomplete="off" aria-label="Ask M.A.H.I. a question">
+    <button type="submit" class="mahi-send" aria-label="Send">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7Z"/></svg>
+    </button>
+  </form>
+</div>
+
+</body>
+</html>
